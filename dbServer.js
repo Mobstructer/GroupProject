@@ -1,6 +1,6 @@
-const express = require("express")
-const app = express() 
-const mysql = require ("mysql")
+const express = require("express");
+const app = express();
+const mysql = require("mysql");
 
 const PORT = 3000;
 
@@ -10,31 +10,30 @@ const db = mysql.createPool({
     user: "newuser",
     database: "groupproject",
     port: "3306"
-})
-db.getConnection ( (err, connection)=> { 
-    if (err) 
-        throw (err) 
-    console.log ("DB connected successful: " + connection.threadId)
-})
+});
+
+db.getConnection((err, connection) => {
+    if (err)
+        throw (err);
+    console.log("DB connected successfully: " + connection.threadId);
+    connection.release();
+});
 
 app.use(express.json());
 app.use(express.static('public'));
 
-app.post('/submitData', (req, res) => {
-    const {CityName, Population, AverageSalary, Area, CityID, CnID, StID} = req.body;
-    const dataToInsert = {CityName, Population, AverageSalary, Area, CityID, CnID, StID};
-
-    connection.query('INSERT INTO city SET ?', dataToInsert, (err, result) =>{
+// Endpoint to fetch data from MySQL
+app.get('/getDataFromMySQL', (req, res) => {
+    db.query('SELECT * FROM state; SELECT * FROM county; SELECT * FROM city', (err, results) => {
         if (err) {
-            consolse.error('Error inserting data:', err.stack);
-            res.status(500).json({ message: 'Error inserting data.'});
+            console.error('Error fetching data:', err);
+            res.status(500).json({ message: 'Error fetching data.' });
             return;
         }
-        console.log('Inserted ' + result.affectedRows + ' row(s).');
-        res.json({ message: 'Data inserted successfully.'});
-    })
-})
+        res.json(results);
+    });
+});
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/index.html`);
-})
+    console.log(`Server is running on http://localhost:${PORT}/homepage.html`);
+});
