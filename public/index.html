@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Group Project</h1>
+    <a href="homepage.html">Go Back</a>
     <form id="myForm">
         <label for="CityName">City Name:</label>
         <input type="text" id="CityName" name="CityName">
@@ -16,10 +17,8 @@
         <input type="number" id="AverageSalary" name="AverageSalary">
         <label for="Area">Area:</label>
         <input type="number" id="Area" name="Area">
-        <label for="CityID">City ID:</label>
-        <input type="text" id="CityID" name="CityID">
-        <label for="CnID">Country ID:</label>
-        <input type="text" id="CnID" name="CnID">
+        <label for="CnID">County ID:</label>
+        <input type="number" id="CnID" name="CnID">
         <label for="StID">State ID:</label>
         <input type="text" id="StID" name="StID">
         <button type="button" onclick="submitData()">Submit</button>
@@ -27,11 +26,10 @@
 
     <script>
         function submitData() {
-            const CityID = document.getElementById('CityID').value;
-            const AverageSalary = document.getElementById('AverageSalary').value;
             const CityName = document.getElementById('CityName').value;
-            const Area = document.getElementById('Area').value;
             const Population = document.getElementById('Population').value;
+            const AverageSalary = document.getElementById('AverageSalary').value;
+            const Area = document.getElementById('Area').value;
             const CnID = document.getElementById('CnID').value;
             const StID = document.getElementById('StID').value;
             
@@ -40,7 +38,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ CityID, AverageSalary, CityName, Area, Population, CnID, StID })
+                body: JSON.stringify({CityName, Population, AverageSalary, Area, CnID, StID })
             })
             .then(response => response.json())
             .then(data => {
