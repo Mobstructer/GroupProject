@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Data Tables</title>
+</head>
+<body>
+    <h1>View Data Tables</h1>
+    <a href="homepage.html">Go Back</a>
+    <form id="myForm">
+        <label for="StateName">State Name:</label>
+        <input type="text" id="StateName" name="StateName">
+        <label for="Population">Population:</label>
+        <input type="number" id="Population" name="Population">
+        <label for="Governor">Governor:</label>
+        <input type="text" id="Governor" name="Governor">
+        <label for="AverageSalary">Average Salary:</label>
+        <input type="number" id="AverageSalary" name="AverageSalary">
+        <label for="Area">Area:</label>
+        <input type="number" id="Area" name="Area">
+        <label for="StateID">State ID:</label>
+        <input type="text" id="StateID" name="StateID">
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+    <form id="myForm">
+        <label for="CountyName">County Name:</label>
+        <input type="text" id="CountyName" name="CountyName">
+        <label for="Population">Population:</label>
+        <input type="number" id="Population" name="Population">
+        <label for="AverageSalary">Average Salary:</label>
+        <input type="number" id="AverageSalary" name="AverageSalary">
+        <label for="Area">Area:</label>
+        <input type="number" id="Area" name="Area">
+        <label for="CountyID">County ID:</label>
+        <input type="number" id="CountyID" name="CountyID">
+        <label for="StaID">State ID:</label>
+        <input type="text" id="StaID" name="StaID">
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+    <form id="myForm">
+        <label for="MunicipalityName">Municipality Name:</label>
+        <input type="text" id="MunicipalityName" name="MunicipalityName">
+        <label for="Population">Population:</label>
+        <input type="number" id="Population" name="Population">
+        <label for="AverageSalary">Average Salary:</label>
+        <input type="number" id="AverageSalary" name="AverageSalary">
+        <label for="Area">Area:</label>
+        <input type="number" id="Area" name="Area">
+        <label for="CnID">County ID:</label>
+        <input type="number" id="CnID" name="CnID">
+        <label for="StID">State ID:</label>
+        <input type="text" id="StID" name="StID">
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <script>
+        function submitData() {
+            const StateName = document.getElementById('StateName').value;
+            const Population = document.getElementById('Population').value;
+            const Governor = document.getElementById('Governor').value;
+            const AverageSalary = document.getElementById('AverageSalary').value;
+            const Area = document.getElementById('Area').value;
+            const StateID = document.getElementById('StateID').value;
+
+            const CountyName = document.getElementById('MunicipalityName').value;
+            const PopulationC = document.getElementById('Population').value;
+            const AverageSalaryC = document.getElementById('AverageSalary').value;
+            const AreaC = document.getElementById('Area').value;
+            const CountyID = document.getElementById('CountyID').value;
+            const StaID = document.getElementById('StaID').value;
+
+            const MunicipalityName = document.getElementById('MunicipalityName').value;
+            const PopulationM = document.getElementById('Population').value;
+            const AverageSalaryM = document.getElementById('AverageSalary').value;
+            const AreaM = document.getElementById('Area').value;
+            const CnID = document.getElementById('CnID').value;
+            const StID = document.getElementById('StID').value;
+            
+            fetch('/submitData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({MunicipalityName, Population, AverageSalary, Area, CnID, StID })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data submitted successfully:', data);
+                alert('Data submitted successfully!');
+            })
+            .catch(error => {
+                console.error('Error submitting data:', error);
+                alert('Error submitting data!');
+            });
+        }
+    </script>
+</body>
+</html>

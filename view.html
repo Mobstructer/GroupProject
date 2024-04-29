@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editing Data Tables</title>
+</head>
+<body>
+    <h1>Editing Data Tables</h1>
+    <a href="homepage.html">Go Back</a>
+    <table id="myTable" border="1">
+        <thead>
+            <tr>
+                <th>StateName</th>
+                <th>Population</th>
+                <th>Governor</th>
+                <th>Average Salary</th>
+                <th>Area</th>
+                <th>StateID</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+    <table id="myTable" border="1">
+        <thead>
+            <tr>
+                <th>CountyName</th>
+                <th>Population</th>
+                <th>Average Salary</th>
+                <th>Area</th>
+                <th>CountyID</th>
+                <th>StaID</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+    <table id="myTable" border="1">
+        <thead>
+            <tr>
+                <th>MunicipalityName</th>
+                <th>Population</th>
+                <th>Average Salary</th>
+                <th>Area</th>
+                <th>CnID</th>
+                <th>StID</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+    
+    <script>
+        window.onload = function() {
+            fetchData();
+        };
+
+        function fetchData() {
+            fetch('/getDataFromMySQL')
+            .then(response => response.json())
+            .then(data => {
+                populateTable(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }
+
+        function populateTable(data) {
+            var tableBody = document.getElementById('tableBody');
+            data[0].forEach(rowData => {
+                var newRow = tableBody.insertRow();
+                Object.values(rowData).forEach(value => {
+                    var newCell = newRow.insertCell();
+                    newCell.textContent = value;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
